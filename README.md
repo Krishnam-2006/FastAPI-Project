@@ -161,7 +161,3 @@ This will:
 - Based on Fast API learning and using AI this project is made.
 
 ---
-
-## 📄 License
-
-[MIT / or whatever license you want — or remove this section]
