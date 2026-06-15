@@ -1,17 +1,18 @@
-# 📝 [BrewNest]
+# 📝 BrewNest
 
-> A Fullstack project made using Fastapi and other tools 
+> A full-stack blog application built with FastAPI, PostgreSQL, and JWT authentication.
+> Features server-side rendering with Jinja2, async database operations, and a complete user system.
 
 ---
 
 ## 🚀 Features
 
-- User registration and login with JWT authentication
-- Create, read, update, and delete blog posts
-- Profile picture upload (stored locally)
+- JWT-based user registration and login with secure password hashing
+- Full CRUD operations on blog posts (create, read, update, delete)
+- Profile picture upload stored on the server filesystem
 - Server-side rendered pages with Jinja2 templates
-- Database migrations with Alembic
-- Seed script to populate database with sample data
+- Async PostgreSQL integration with SQLAlchemy and Alembic migrations
+- Seed script to populate database with 5 users and 44 sample posts
 
 ---
 
@@ -20,18 +21,16 @@
 | Tool | Purpose |
 |---|---|
 | FastAPI | Backend framework |
-| PostgreSQL | Database |
-| SQLAlchemy (async) | ORM |
-| Alembic | Database migrations |
-| Jinja2 | HTML templating |
-| JWT | Authentication |
+| PostgreSQL | Relational database |
+| SQLAlchemy (async) | ORM and query layer |
+| Alembic | Database schema migrations |
+| Jinja2 | Server-side HTML templating |
+| JWT + bcrypt | Authentication and password hashing |
 | Uvicorn | ASGI server |
 
 ---
 
 ## ⚙️ Prerequisites
-
-Make sure you have the following installed before starting:
 
 - Python 3.11+
 - PostgreSQL
@@ -43,8 +42,8 @@ Make sure you have the following installed before starting:
 
 **1. Clone the repository**
 ```bash
-git clone [your-repo-url]
-cd [your-project-folder]
+git clone https://github.com/Krishnam-2006/FastAPI-Project.git
+cd FastAPI-Project
 ```
 
 **2. Create and activate a virtual environment**
@@ -67,21 +66,16 @@ pip install -r requirements.txt
 
 ## 🔐 Environment Variables
 
-Create a `.env` file in the root of your project and fill in the following:
+Create a `.env` file in the root directory:
 
 ```env
-# Database
-DATABASE_URL=
-
-# JWT
-SECRET_KEY=
-ALGORITHM=
-ACCESS_TOKEN_EXPIRE_MINUTES=
-
-# Add any other variables your project uses
+DATABASE_URL=postgresql+asyncpg://user:password@localhost/brewnest
+SECRET_KEY=your-secret-key-here
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
-> ⚠️ Never commit your `.env` file to GitHub. Make sure it's listed in `.gitignore`.
+> ⚠️ Never commit your `.env` file. It is listed in `.gitignore`.
 
 ---
 
@@ -89,10 +83,10 @@ ACCESS_TOKEN_EXPIRE_MINUTES=
 
 **1. Create your PostgreSQL database**
 ```sql
-CREATE DATABASE [your_db_name];
+CREATE DATABASE brewnest;
 ```
 
-**2. Run Alembic migrations to create all tables**
+**2. Run migrations**
 ```bash
 alembic upgrade head
 ```
@@ -105,59 +99,24 @@ alembic upgrade head
 uvicorn main:app --reload
 ```
 
-Then open your browser and go to:
-- **App** → http://127.0.0.1:8000
-- **API Docs (Swagger)** → http://127.0.0.1:8000/docs
-- **Alternative Docs (ReDoc)** → http://127.0.0.1:8000/redoc
+| URL | Description |
+|---|---|
+| http://127.0.0.1:8000 | Main app |
+| http://127.0.0.1:8000/docs | Swagger UI (API docs) |
+| http://127.0.0.1:8000/redoc | ReDoc (alternative docs) |
 
 ---
 
 ## 🌱 Seeding the Database
 
-To populate the database with sample data run:
-
 ```bash
-python populate.py
+python populate_db.py
 ```
 
-This will:
-- Clear any existing users, posts, and profile pictures
-- Create 5 sample users
-- Create 44 sample blog posts distributed across users
-- Set realistic post dates automatically
+This creates 5 sample users and 44 blog posts with realistic dates.
 
-> Note: Make sure the app is running before executing the seed script, as it makes HTTP requests to the API.
+> Make sure the app is running before executing — the seed script hits the API directly.
 
 ---
 
 ## 📁 Project Structure
-
-```
-[your-project-folder]/
-│
-├── main.py               # FastAPI app entry point
-├── models.py             # SQLAlchemy database models
-├── database.py           # Database connection and session
-├── populate.py           # Database seed script
-├── image_utils.py        # Profile picture utilities
-│
-├── routers/              # API route handlers
-├── templates/            # Jinja2 HTML templates
-├── static/               # CSS, JS, static files
-├── populate_images/      # Sample images for seeding
-├── migrations/           # Alembic migration files
-│
-├── .env                  # Environment variables (do not commit)
-├── .gitignore
-└── requirements.txt
-```
-
----
-
-## 📌 Notes
-
-- Profile pictures are stored locally in the filesystem, 
-- boto3 is listed as a dependency but S3 integration is not configured in this version
-- Based on Fast API learning and using AI this project is made.
-
----
