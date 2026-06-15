@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+
+  db:
+    image: postgres:16
+    container_name: brewnest_db
+    restart: always
+    environment:
+      POSTGRES_USER: brewnest_user
+      POSTGRES_PASSWORD: brewnest_pass
+      POSTGRES_DB: brewnest
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: brewnest_app
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql+psycopg://brewnest_user:brewnest_pass@db:5432/brewnest
+      SECRET_KEY: ${SECRET_KEY}
+      MAIL_SERVER: ${MAIL_SERVER}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_FROM: ${MAIL_FROM}
+      MAIL_USE_TLS: ${MAIL_USE_TLS}
+      FRONTEND_URL: ${FRONTEND_URL}
+    volumes:
+      - ./media:/app/media
+    command: >
+      sh -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000"
+
+volumes:
+  postgres_data:

@@ -13,7 +13,10 @@ from database import Base
 
 import selectors
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+import platform
+
+if platform.system() == "Windows":
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
