@@ -7,7 +7,7 @@
 venv/
 
 # Python cache
-__pycache__/
+__pycache__
 *.pyc
 
 # VS Code
@@ -18,3 +18,4 @@ __pycache__/
 
 # Database files
 *.db
+
