@@ -118,5 +118,14 @@ This creates 5 sample users and 44 blog posts with realistic dates.
 > Make sure the app is running before executing — the seed script hits the API directly.
 
 ---
+## ▶️ Running with Docker (Recommended)
 
-## 📁 Project Structure
+```bash
+docker-compose up --build
+```
+Then open http://localhost:8000
+
+## ▶️ Running Locally
+```bash
+uvicorn main:app --reload
+```
