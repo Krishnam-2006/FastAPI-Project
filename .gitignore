@@ -19,3 +19,7 @@ __pycache__
 # Database files
 *.db
 
+
+# Generated uploads
+media/profile_pics/*
+!media/profile_pics/.gitkeep
