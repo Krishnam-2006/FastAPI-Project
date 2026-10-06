@@ -1,3 +1,4 @@
+import sys
 import asyncio
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -12,7 +13,8 @@ from main import app
 
 import selectors
 
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+if sys.platform == "win32":
+	asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 POPULATE_IMAGES_DIR = Path("populate_images")
 
