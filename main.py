@@ -22,9 +22,7 @@ from routers import posts, users
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-
     yield
-    # Shutdown
     await engine.dispose()
 
 
@@ -181,17 +179,6 @@ async def forgot_password_page(request: Request):
         "forgot_password.html",
         {"title": "Forgot Password"},
     )
-
-
-@app.get("/reset-password", include_in_schema=False)
-async def reset_password_page(request: Request):
-    response = templates.TemplateResponse(
-        request,
-        "reset_password.html",
-        {"title": "Reset Password"},
-    )
-    response.headers["Referrer-Policy"] = "no-referrer"
-    return response
 
 
 @app.get("/reset-password", include_in_schema=False)
