@@ -23,3 +23,13 @@ __pycache__
 # Generated uploads
 media/profile_pics/*
 !media/profile_pics/.gitkeep
+
+
+.coverage
+htmlcov/
+.pytest_cache/
+# Test and coverage output
+.coverage
+htmlcov/
+.pytest_cache/
+!.env.example

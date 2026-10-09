@@ -1,0 +1,6 @@
+[run]
+concurrency = greenlet,thread
+omit =
+    tests/*
+    populate_db.py
+    venv/*
